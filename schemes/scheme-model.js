@@ -34,25 +34,19 @@ function update(changes, id) {
     });
 }
 
-function remove_XXXXX(id) {
-  return findById(id)
-    .then(schemeToRemove => {
-      DB("schemes")
-        .delete()
-        .where({ id })
-        .then(() => {
-          return new Promise((resolve, reject) => {
-            resolve(schemeToRemove);
-          });
-        });
-    });
+async function remove(id) {
+  const toRemove = await findById(id);
+  
+  await DB("schemes").where({id}).delete();
+
+  return toRemove;
 }
 
-function remove(id) {
-  return DB("schemes")
-    .delete()
-    .where({ id });
-}
+// function remove(id) {
+//   return DB("schemes")
+//     .delete()
+//     .where({ id });
+// }
 
 module.exports = {
   find,
